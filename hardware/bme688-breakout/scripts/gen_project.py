@@ -1,4 +1,4 @@
-"""Emit the KiCad project file, the project symbol-library table and the BOM.
+"""Emit the KiCad 10 project file, the project symbol-library table and the BOM.
 
 Design rules here are deliberately the same numbers verify.py enforces, so
 KiCad's DRC and the generator agree: 0.2 mm clearance, 0.25 mm signal tracks,
@@ -22,6 +22,7 @@ def netclass(name, track, clearance, priority):
         'microvia_diameter': 0.3, 'microvia_drill': 0.1, 'name': name,
         'pcb_color': 'rgba(0, 0, 0, 0.000)', 'priority': priority,
         'schematic_color': 'rgba(0, 0, 0, 0.000)', 'track_width': track,
+        'tuning_profile': '',
         'via_diameter': design.VIA_DIA, 'via_drill': design.VIA_DRILL, 'wire_width': 6,
     }
 
@@ -79,12 +80,17 @@ def project():
         'cvpcb': {'equivalence_files': []},
         'libraries': {'pinned_footprint_libs': [], 'pinned_symbol_libs': []},
         'meta': {'filename': NAME + '.kicad_pro', 'version': 3},
+        'component_class_settings': {
+            'assignments': [],
+            'meta': {'version': 0},
+            'sheet_component_classes': {'enabled': False},
+        },
         'net_settings': {
             'classes': [
                 netclass('Default', design.TRACE_W, design.CLEARANCE, 2147483647),
                 netclass('Power', design.POWER_W, design.CLEARANCE, 1),
             ],
-            'meta': {'version': 4},
+            'meta': {'version': 5},
             'net_colors': None,
             'netclass_assignments': None,
             'netclass_patterns': [
@@ -100,6 +106,10 @@ def project():
         },
         'sheets': [[SHEET_UUID, 'Root']],
         'text_variables': {},
+        'time_domain_parameters': {
+            'delay_profiles_user_defined': [],
+            'meta': {'version': 0},
+        },
     }
 
 

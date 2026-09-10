@@ -9,8 +9,9 @@ It holds the two symbols KiCad 9 does not ship:
   VIN    - a power symbol for the board's unregulated input rail, drawn from
            the stock VCC symbol.
 
-Derived from the KiCad symbol libraries (CC-BY-SA 4.0 with the library
-exception, which allows use in a design without imposing terms on it).
+Written in the KiCad 10 symbol format (20251024) and derived from the KiCad
+10.0.6 symbol libraries (CC-BY-SA 4.0 with the library exception, which allows
+use in a design without imposing terms on it).
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -62,9 +63,9 @@ def main():
     bme = rename(pick('Sensor.kicad_sym', 'BME680'), 'BME680', 'BME688', BME688_PROPS)
     vin = rename(pick('power.kicad_sym', 'VCC'), 'VCC', 'VIN', VIN_PROPS)
     out = ['(kicad_symbol_lib',
-           '\t(version 20241209)',
+           '\t(version 20251024)',
            '\t(generator "bme688-breakout/scripts/gen_sym.py")',
-           '\t(generator_version "9.0")',
+           '\t(generator_version "10.0")',
            sexp.dump(bme, 1),
            sexp.dump(vin, 1),
            ')', '']

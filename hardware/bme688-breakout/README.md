@@ -1,6 +1,6 @@
 # BME688 4-in-1 Environmental Sensor Breakout
 
-A KiCad 9 design for a host-agnostic breakout board around the **Bosch BME688**
+A KiCad 10 design for a host-agnostic breakout board around the **Bosch BME688**
 (gas/VOC, humidity, pressure, temperature, LGA-8). It brings the sensor out on a
 0.1" header that works with any I2C or SPI microcontroller at 1.8–5.5 V logic,
 plus two Qwiic / STEMMA QT connectors for daisy-chaining on the 3.3 V side.
@@ -15,7 +15,7 @@ catalogues, nor in distributor search. The intended part was confirmed as the
 Bosch **BME688**, which is what this design uses. If you actually wanted a
 Bluetooth module, this is the wrong board and none of it carries over.
 
-KiCad 9 ships a `Sensor:BME680` symbol but no BME688. The two parts are pin- and
+KiCad 10 ships a `Sensor:BME680` symbol but no BME688. The two parts are pin- and
 package-compatible (Bosch LGA-8, 3.0 × 3.0 × 0.93 mm, identical pin assignment),
 so `lib/BME688_Breakout.kicad_sym` restates the reviewed BME680 symbol as a
 BME688 with the correct datasheet and description. The land pattern is KiCad's
@@ -28,6 +28,7 @@ own reviewed `Package_LGA:Bosch_LGA-8_3x3mm_P0.8mm_ClockwisePinNumbering`
 |---|---|
 | Size | 38.10 × 27.94 mm (1.5" × 1.1") |
 | Layers | 2, 1.6 mm FR4, B.Cu is a solid GND pour |
+| KiCad | 10 (`kicad_sch` 20250901, `kicad_pcb` 20250907) |
 | Input | 2.5–5.5 V on `VIN` → on-board AP2112K-3.3 LDO |
 | Host logic | 1.8–5.5 V, level shifted on all four signals |
 | Interfaces | I2C (default, 0x76) or SPI |
@@ -132,7 +133,7 @@ before readings settle; the raw resistance is not an air-quality index.
 Standard footprints are referenced by their normal library names
 (`Capacitor_SMD:C_0603_1608Metric` etc.) and resolve from your KiCad
 installation; `scripts/fp_cache/` and `scripts/sym_cache/` hold copies from
-KiCad 9.0.9 purely so the generators can run offline.
+KiCad 10.0.6 purely so the generators can run offline.
 
 ## Regenerating
 
@@ -152,9 +153,16 @@ regeneration takes about three minutes, most of it routing.
 ## What has been checked, and what has not
 
 KiCad is not installed in the environment this was authored in, so the files
-were written directly against the KiCad 9 formats (`kicad_sch` 20250114,
-`kicad_pcb` 20241229), with the coordinate transforms validated against a real
-KiCad 9 project. `scripts/verify.py` re-parses the emitted files and checks:
+were written directly against the **KiCad 10** formats — `kicad_sch` 20250901,
+`kicad_pcb` 20250907, `kicad_sym` 20251024 — every token form copied from the
+demo project and libraries shipped with the KiCad **10.0.6** release. The
+coordinate transforms were validated against a real KiCad project, and the
+emitted token set was diffed against what KiCad 10.0.6 writes, to confirm no
+KiCad 9 token survives (`hide` inside `effects`, `filled_areas_thickness`) and
+that the KiCad 10 additions are present (`body_style`,
+`duplicate_pin_numbers_are_jumpers`, `duplicate_pad_numbers_are_jumpers`,
+`island_removal_mode`, per-side via `tenting`/`covering`/`plugging`).
+`scripts/verify.py` re-parses the emitted files and checks:
 
 - every pad's net matches `design.py`, and no pad is silently left floating
 - **electrical connectivity** of all 14 nets, including a simulated pour fill —

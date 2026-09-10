@@ -1,8 +1,9 @@
 """Generate bme688-breakout.kicad_sch from design.py.
 
-Every symbol used is written into the schematic's lib_symbols cache with any
-derived symbol flattened against its parent, so the file carries complete
-definitions and does not depend on the reader's library versions matching.
+Targets the KiCad 10 schematic format (20250901). Every symbol used is written
+into the schematic's lib_symbols cache with any derived symbol flattened against
+its parent, so the file carries complete definitions and does not depend on the
+reader's library versions matching.
 
 Signal pins get a short wire stub and a net label; supply pins get a power
 symbol turned so its graphic points away from the part. Symbol UUIDs match the
@@ -56,7 +57,8 @@ def flatten(lib_id):
         parent = raw_symbol(libname, str(ext[1]))
         body_src = parent
     out = [sexp.Str('%s:%s' % (libname, name))]
-    for key in ('pin_numbers', 'pin_names', 'exclude_from_sim', 'in_bom', 'on_board'):
+    for key in ('pin_numbers', 'pin_names', 'exclude_from_sim', 'in_bom', 'on_board',
+                'in_pos_files', 'duplicate_pin_numbers_are_jumpers'):
         node = sexp.get(body_src, key) or sexp.get(sym, key)
         if node is not None:
             out.append(node)
@@ -144,6 +146,7 @@ def symbol_instance(lib_id, ref, value, X, Y, A, uuid_str, props_hidden=(),
            '\t\t(lib_id %s)' % sexp.quote(lib_id),
            '\t\t(at %s %s %d)' % (sexp.fmt(X), sexp.fmt(Y), A),
            '\t\t(unit 1)',
+           '\t\t(body_style 1)',
            '\t\t(exclude_from_sim no)',
            '\t\t(in_bom yes)',
            '\t\t(on_board yes)',
@@ -169,15 +172,17 @@ def symbol_instance(lib_id, ref, value, X, Y, A, uuid_str, props_hidden=(),
 
 
 def _sch_prop(key, val, x, y, hide=False):
+    """One symbol property. KiCad 10 puts `hide` on the property, not in effects."""
     out = ['\t\t(property %s %s' % (sexp.quote(key), sexp.quote(val)),
-           '\t\t\t(at %s %s 0)' % (sexp.fmt(x), sexp.fmt(y)),
-           '\t\t\t(effects',
-           '\t\t\t\t(font',
-           '\t\t\t\t\t(size 1.27 1.27)',
-           '\t\t\t\t)']
+           '\t\t\t(at %s %s 0)' % (sexp.fmt(x), sexp.fmt(y))]
     if hide:
-        out.append('\t\t\t\t(hide yes)')
-    out += ['\t\t\t)', '\t\t)']
+        out.append('\t\t\t(hide yes)')
+    out += ['\t\t\t(effects',
+            '\t\t\t\t(font',
+            '\t\t\t\t\t(size 1.27 1.27)',
+            '\t\t\t\t)',
+            '\t\t\t)',
+            '\t\t)']
     return out
 
 
@@ -265,9 +270,9 @@ def main():
 
     b = design.BOARD
     out = ['(kicad_sch',
-           '\t(version 20250114)',
+           '\t(version 20250901)',
            '\t(generator "bme688-breakout/scripts/gen_sch.py")',
-           '\t(generator_version "9.0")',
+           '\t(generator_version "10.0")',
            '\t(uuid "%s")' % SHEET_UUID,
            '\t(paper "A3")',
            '\t(title_block',

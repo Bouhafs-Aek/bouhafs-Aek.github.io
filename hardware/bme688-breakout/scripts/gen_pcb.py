@@ -1,4 +1,4 @@
-"""Generate bme688-breakout.kicad_pcb from design.py.
+"""Generate bme688-breakout.kicad_pcb in the KiCad 10 board format (20250907).
 
 Placement comes from design.PARTS; every track and via is produced by the
 maze router in router.py and then re-checked by verify.py. GND is a solid
@@ -78,7 +78,20 @@ SETUP = """	(setup
 		)
 		(pad_to_mask_clearance 0.05)
 		(allow_soldermask_bridges_in_footprints no)
-		(tenting front back)
+		(tenting
+			(front yes)
+			(back yes)
+		)
+		(covering
+			(front no)
+			(back no)
+		)
+		(plugging
+			(front no)
+			(back no)
+		)
+		(capping no)
+		(filling no)
 	)"""
 
 
@@ -139,6 +152,7 @@ def emit_footprint(ref):
     a = sexp.get(fp, 'attr')
     if a:
         lines.append('\t\t' + sexp.dump(a).strip())
+    lines.append('\t\t(duplicate_pad_numbers_are_jumpers no)')
 
     for item in fp:
         if not isinstance(item, list) or item[0] in SKIP_TOKENS:
@@ -423,13 +437,12 @@ def gnd_zone():
             '\t\t\t(clearance %s)\n'
             '\t\t)\n'
             '\t\t(min_thickness 0.2)\n'
-            '\t\t(filled_areas_thickness no)\n'
             '\t\t(fill yes\n'
             '\t\t\t(thermal_gap 0.3)\n'
             '\t\t\t(thermal_bridge_width 0.4)\n'
-            '\t\t\t(smoothing fillet\n'
-            '\t\t\t\t(radius 0.3)\n'
-            '\t\t\t)\n'
+            '\t\t\t(smoothing fillet)\n'
+            '\t\t\t(radius 0.3)\n'
+            '\t\t\t(island_removal_mode 0)\n'
             '\t\t)\n'
             '\t\t(polygon\n\t\t\t(pts\n\t\t\t\t%s\n\t\t\t)\n\t\t)\n'
             '\t)') % (NETNUM['GND'], uid('zone', 'gnd', 'b.cu'),
@@ -446,9 +459,9 @@ def main():
 
     b = design.BOARD
     out = ['(kicad_pcb',
-           '\t(version 20241229)',
+           '\t(version 20250907)',
            '\t(generator "bme688-breakout/scripts/gen_pcb.py")',
-           '\t(generator_version "9.0")',
+           '\t(generator_version "10.0")',
            '\t(general',
            '\t\t(thickness 1.6)',
            '\t\t(legacy_teardrops no)',
@@ -474,7 +487,13 @@ def main():
                        uid('seg', x1, y1, x2, y2, layer, net)))
     for x, y, net in vias:
         out.append('\t(via\n\t\t(at %s %s)\n\t\t(size %s)\n\t\t(drill %s)\n'
-                   '\t\t(layers "F.Cu" "B.Cu")\n\t\t(net %d)\n\t\t(uuid "%s")\n\t)' % (
+                   '\t\t(layers "F.Cu" "B.Cu")\n'
+                   '\t\t(tenting\n\t\t\t(front none)\n\t\t\t(back none)\n\t\t)\n'
+                   '\t\t(capping none)\n'
+                   '\t\t(covering\n\t\t\t(front none)\n\t\t\t(back none)\n\t\t)\n'
+                   '\t\t(plugging\n\t\t\t(front none)\n\t\t\t(back none)\n\t\t)\n'
+                   '\t\t(filling none)\n'
+                   '\t\t(net %d)\n\t\t(uuid "%s")\n\t)' % (
                        sexp.fmt(x), sexp.fmt(y), sexp.fmt(design.VIA_DIA),
                        sexp.fmt(design.VIA_DRILL), NETNUM[net], uid('via', x, y, net)))
     out.append(gnd_zone())

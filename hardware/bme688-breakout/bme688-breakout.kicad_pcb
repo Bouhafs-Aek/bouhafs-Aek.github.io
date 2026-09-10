@@ -1,7 +1,7 @@
 (kicad_pcb
-	(version 20241229)
+	(version 20250907)
 	(generator "bme688-breakout/scripts/gen_pcb.py")
-	(generator_version "9.0")
+	(generator_version "10.0")
 	(general
 		(thickness 1.6)
 		(legacy_teardrops no)
@@ -71,7 +71,20 @@
 		)
 		(pad_to_mask_clearance 0.05)
 		(allow_soldermask_bridges_in_footprints no)
-		(tenting front back)
+		(tenting
+			(front yes)
+			(back yes)
+		)
+		(covering
+			(front no)
+			(back no)
+		)
+		(plugging
+			(front no)
+			(back no)
+		)
+		(capping no)
+		(filling no)
 	)
 	(net 0 "")
 	(net 1 "GND")
@@ -92,7 +105,7 @@
 		(layer "F.Cu")
 		(uuid "2d30f79c-2c2c-56ec-b8f8-f9e668989ec5")
 		(at 111.5 83)
-		(descr "Bosch  LGA, 8 Pin (https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME680-DS001-00.pdf#page=44), generated with kicad-footprint-generator ipc_noLead_generator.py")
+		(descr "Bosch  LGA, 8 Pin (https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME680-DS001-00.pdf#page=44)")
 		(tags "Bosch LGA NoLead")
 		(property "Reference" "U1"
 			(at 0 -0.1 0)
@@ -162,6 +175,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -1.71 1.61)
 			(end -1.71 -1.61)
@@ -313,7 +328,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Package_LGA.3dshapes/Bosch_LGA-8_3x3mm_P0.8mm_ClockwisePinNumbering.step"
+			"${KICAD10_3DMODEL_DIR}/Package_LGA.3dshapes/Bosch_LGA-8_3x3mm_P0.8mm_ClockwisePinNumbering.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -329,7 +344,7 @@
 		(layer "F.Cu")
 		(uuid "10d27cc9-6117-5eed-9c62-564fed48793b")
 		(at 129 95)
-		(descr "SOT, 5 Pin (JEDEC MO-178 Var AA https://www.jedec.org/document_search?search_api_views_fulltext=MO-178), generated with kicad-footprint-generator ipc_gullwing_generator.py")
+		(descr "SOT, 5 Pin (JEDEC MO-178 Var AA https://www.jedec.org/document_search?search_api_views_fulltext=MO-178)")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "U2"
 			(at 0 -0.1 0)
@@ -399,6 +414,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.91 -1.56)
 			(end 0.91 -1.56)
@@ -696,7 +713,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step"
+			"${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -712,7 +729,7 @@
 		(layer "F.Cu")
 		(uuid "3c16a384-2cac-56ea-94c5-aed674af41a2")
 		(at 109.5 91)
-		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236), generated with kicad-footprint-generator ipc_gullwing_generator.py")
+		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236)")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "Q1"
 			(at 0 -0.1 0)
@@ -782,6 +799,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.76 -1.56)
 			(end 0.76 -1.56)
@@ -1062,7 +1081,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
+			"${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -1078,7 +1097,7 @@
 		(layer "F.Cu")
 		(uuid "79512aa8-d217-5783-b5ed-791464ee94bd")
 		(at 114 91)
-		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236), generated with kicad-footprint-generator ipc_gullwing_generator.py")
+		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236)")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "Q2"
 			(at 0 -0.1 0)
@@ -1148,6 +1167,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.76 -1.56)
 			(end 0.76 -1.56)
@@ -1428,7 +1449,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
+			"${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -1444,7 +1465,7 @@
 		(layer "F.Cu")
 		(uuid "379d22cf-778b-59bd-ba88-9514a0550c49")
 		(at 118.5 91)
-		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236), generated with kicad-footprint-generator ipc_gullwing_generator.py")
+		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236)")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "Q3"
 			(at 0 -0.1 0)
@@ -1514,6 +1535,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.76 -1.56)
 			(end 0.76 -1.56)
@@ -1794,7 +1817,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
+			"${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -1810,7 +1833,7 @@
 		(layer "F.Cu")
 		(uuid "eecbdf4c-9f10-5862-a490-872cfe49d01b")
 		(at 123 91)
-		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236), generated with kicad-footprint-generator ipc_gullwing_generator.py")
+		(descr "SOT, 3 Pin (JEDEC TO-236 Var AB https://www.jedec.org/document_search?search_api_views_fulltext=TO-236)")
 		(tags "SOT TO_SOT_SMD")
 		(property "Reference" "Q4"
 			(at 0 -0.1 0)
@@ -1880,6 +1903,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.76 -1.56)
 			(end 0.76 -1.56)
@@ -2160,7 +2185,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
+			"${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2176,7 +2201,7 @@
 		(layer "F.Cu")
 		(uuid "6ac0cd6d-277b-5704-af81-3eab0b4c726a")
 		(at 115 85.5)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R1"
 			(at 0 -0.1 0)
@@ -2246,6 +2271,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
@@ -2319,7 +2346,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2335,7 +2362,7 @@
 		(layer "F.Cu")
 		(uuid "d1a023ff-f2e3-510a-8fec-747fe0ef4c01")
 		(at 118.5 85.5)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R2"
 			(at 0 -0.1 0)
@@ -2405,6 +2432,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
@@ -2478,7 +2507,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2494,7 +2523,7 @@
 		(layer "F.Cu")
 		(uuid "40bedfcd-219a-5f9f-b87f-2d053e33676d")
 		(at 109.5 95)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R3"
 			(at 0 -0.1 0)
@@ -2564,6 +2593,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
@@ -2637,7 +2668,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2653,7 +2684,7 @@
 		(layer "F.Cu")
 		(uuid "a3ff74d3-da0f-5318-b4df-23e11086c352")
 		(at 113.5 95)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R4"
 			(at 0 -0.1 0)
@@ -2723,6 +2754,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
@@ -2796,7 +2829,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2812,7 +2845,7 @@
 		(layer "F.Cu")
 		(uuid "3dde2f75-4237-5d5a-9e25-416c61384a9e")
 		(at 122 85.5)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R5"
 			(at 0 -0.1 0)
@@ -2882,6 +2915,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
@@ -2955,7 +2990,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -2971,7 +3006,7 @@
 		(layer "F.Cu")
 		(uuid "e4f70ad1-7cc7-57dc-87ea-d9fa611f01e6")
 		(at 121.5 95)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R6"
 			(at 0 -0.1 0)
@@ -3041,6 +3076,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
@@ -3114,7 +3151,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -3130,7 +3167,7 @@
 		(layer "F.Cu")
 		(uuid "c23328be-b704-52c1-a2af-400893aa0579")
 		(at 117.5 95)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R7"
 			(at 0 -0.1 0)
@@ -3200,6 +3237,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
@@ -3273,7 +3312,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -3289,7 +3328,7 @@
 		(layer "F.Cu")
 		(uuid "7b88a74e-6913-5466-a679-5efd075e4fc3")
 		(at 130 85)
-		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor")
 		(property "Reference" "R8"
 			(at 0 -0.1 0)
@@ -3359,6 +3398,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.237258 -0.5225)
 			(end 0.237258 -0.5225)
@@ -3432,7 +3473,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -3448,7 +3489,7 @@
 		(layer "F.Cu")
 		(uuid "49f2ab88-0d63-5131-a1de-59e016a0ba1a")
 		(at 107.8 81.4)
-		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor")
 		(property "Reference" "C1"
 			(at 0 -0.1 0)
@@ -3518,6 +3559,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.14058 -0.51)
 			(end 0.14058 -0.51)
@@ -3591,7 +3634,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -3607,7 +3650,7 @@
 		(layer "F.Cu")
 		(uuid "b0088ee9-477c-5743-a683-e71abf2f034b")
 		(at 107.8 83.9)
-		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor")
 		(property "Reference" "C2"
 			(at 0 -0.1 0)
@@ -3677,6 +3720,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.14058 -0.51)
 			(end 0.14058 -0.51)
@@ -3750,7 +3795,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -3766,7 +3811,7 @@
 		(layer "F.Cu")
 		(uuid "d5a92fd7-bf04-5841-b6f6-c05daa33fc60")
 		(at 125 95)
-		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor")
 		(property "Reference" "C3"
 			(at 0 -0.1 0)
@@ -3836,6 +3881,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.14058 -0.51)
 			(end 0.14058 -0.51)
@@ -3909,7 +3956,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -3925,7 +3972,7 @@
 		(layer "F.Cu")
 		(uuid "1254d9b3-953f-57dc-8e83-439b2703db14")
 		(at 130.3 91)
-		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor")
 		(property "Reference" "C4"
 			(at 0 -0.1 0)
@@ -3995,6 +4042,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.14058 -0.51)
 			(end 0.14058 -0.51)
@@ -4068,7 +4117,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -4084,7 +4133,7 @@
 		(layer "F.Cu")
 		(uuid "17805435-60f4-55e7-8441-e44dd5e0d19a")
 		(at 127 91)
-		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
+		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor")
 		(property "Reference" "C5"
 			(at 0 -0.1 0)
@@ -4154,6 +4203,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.14058 -0.51)
 			(end 0.14058 -0.51)
@@ -4227,7 +4278,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/Capacitor_SMD.3dshapes/C_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -4243,7 +4294,7 @@
 		(layer "F.Cu")
 		(uuid "56a8ef5d-d829-57cf-ac9a-8a55e26f9833")
 		(at 130 82.5)
-		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator")
+		(descr "LED SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf)")
 		(tags "LED")
 		(property "Reference" "D1"
 			(at 0 -0.1 0)
@@ -4313,6 +4364,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -1.485 -0.735)
 			(end -1.485 0.735)
@@ -4430,7 +4483,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/LED_SMD.3dshapes/LED_0603_1608Metric.step"
+			"${KICAD10_3DMODEL_DIR}/LED_SMD.3dshapes/LED_0603_1608Metric.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -4516,8 +4569,10 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom allow_soldermask_bridges)
+		(duplicate_pad_numbers_are_jumpers no)
 		(zone_connect 1)
 		(net_tie_pad_groups "1,2")
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_poly
 			(pts
 				(xy -0.9 -0.3)
@@ -4865,8 +4920,10 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom allow_soldermask_bridges)
+		(duplicate_pad_numbers_are_jumpers no)
 		(zone_connect 1)
 		(net_tie_pad_groups "1, 2")
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_poly
 			(pts
 				(xy 0.25 -0.3)
@@ -5174,8 +5231,10 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom allow_soldermask_bridges)
+		(duplicate_pad_numbers_are_jumpers no)
 		(zone_connect 1)
 		(net_tie_pad_groups "1, 2")
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_poly
 			(pts
 				(xy 0.25 -0.3)
@@ -5483,6 +5542,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr through_hole)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -1.38 -1.38)
 			(end 0 -1.38)
@@ -5695,7 +5756,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x08_P2.54mm_Vertical.step"
+			"${KICAD10_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x08_P2.54mm_Vertical.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -5781,6 +5842,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr through_hole)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -1.38 -1.38)
 			(end 0 -1.38)
@@ -5949,7 +6012,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x04_P2.54mm_Vertical.step"
+			"${KICAD10_3DMODEL_DIR}/Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x04_P2.54mm_Vertical.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -5965,7 +6028,7 @@
 		(layer "F.Cu")
 		(uuid "496c9be7-4807-5cd3-ae8a-3bc577225d72")
 		(at 102.875 88.97 270)
-		(descr "JST SH series connector, SM04B-SRSS-TB (http://www.jst-mfg.com/product/pdf/eng/eSH.pdf), generated with kicad-footprint-generator")
+		(descr "JST SH series connector, SM04B-SRSS-TB (http://www.jst-mfg.com/product/pdf/eng/eSH.pdf)")
 		(tags "connector JST SH horizontal")
 		(property "Reference" "J3"
 			(at 0 -0.1 0)
@@ -6035,6 +6098,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -3.11 -1.785)
 			(end -2.06 -1.785)
@@ -6362,7 +6427,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.step"
+			"${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -6378,7 +6443,7 @@
 		(layer "F.Cu")
 		(uuid "edebb536-0b26-5e02-9a62-44122cc5ef7c")
 		(at 135.225 88.97 90)
-		(descr "JST SH series connector, SM04B-SRSS-TB (http://www.jst-mfg.com/product/pdf/eng/eSH.pdf), generated with kicad-footprint-generator")
+		(descr "JST SH series connector, SM04B-SRSS-TB (http://www.jst-mfg.com/product/pdf/eng/eSH.pdf)")
 		(tags "connector JST SH horizontal")
 		(property "Reference" "J4"
 			(at 0 -0.1 0)
@@ -6448,6 +6513,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr smd)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -3.11 -1.785)
 			(end -2.06 -1.785)
@@ -6775,7 +6842,7 @@
 		)
 		(embedded_fonts no)
 		(model
-			"${KICAD9_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.step"
+			"${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -6861,6 +6928,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
 			(end 0 0.7)
@@ -6983,6 +7052,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
 			(end 0 0.7)
@@ -7105,6 +7176,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
 			(end 0 0.7)
@@ -7227,6 +7300,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
 			(end 0 0.7)
@@ -7349,6 +7424,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
 			(end 2.2 0)
@@ -7465,6 +7542,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
 			(end 2.2 0)
@@ -7581,6 +7660,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
 			(end 2.2 0)
@@ -7697,6 +7778,8 @@
 		(sheetname "Root")
 		(sheetfile "bme688-breakout.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
+		(duplicate_pad_numbers_are_jumpers no)
+		(duplicate_pad_numbers_are_jumpers no)
 		(fp_circle
 			(center 0 0)
 			(end 2.2 0)
@@ -9137,6 +9220,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 7)
 		(uuid "a9d6f059-9d65-5a44-a648-abf5a32504c1")
 	)
@@ -9145,6 +9242,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 7)
 		(uuid "be3c59c0-75b0-5e31-89f5-97648fac3468")
 	)
@@ -9153,6 +9264,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 3)
 		(uuid "a9b1fba0-d0e2-5d09-9756-197b81be1a84")
 	)
@@ -9161,6 +9286,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 3)
 		(uuid "0e13a21a-0898-5b4f-8688-6a1de017b8b5")
 	)
@@ -9169,6 +9308,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 3)
 		(uuid "2b509cf5-f7fc-5375-8791-e80e34b04771")
 	)
@@ -9177,6 +9330,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 3)
 		(uuid "f309e8e3-a72b-5d35-8ab8-ad0bb536f487")
 	)
@@ -9185,6 +9352,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 3)
 		(uuid "8e7092bf-06ca-52d7-8053-0ab8fa35e42b")
 	)
@@ -9193,6 +9374,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 3)
 		(uuid "849facc7-e3f9-5fc4-a77d-9e2ae75f099a")
 	)
@@ -9201,6 +9396,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 4)
 		(uuid "11bcf7ed-5f2c-5ea9-9ec6-7706648f49fc")
 	)
@@ -9209,6 +9418,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 4)
 		(uuid "7760ae93-23a4-5586-b4cf-2a0da4bbeb95")
 	)
@@ -9217,6 +9440,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 4)
 		(uuid "259d5407-40c4-52af-a6df-dc4963f45bc9")
 	)
@@ -9225,6 +9462,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 2)
 		(uuid "bb54bc8f-5e8f-5147-b987-a2ea99c7efa5")
 	)
@@ -9233,6 +9484,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 2)
 		(uuid "41d399ef-896c-5050-9819-b29e94c900c5")
 	)
@@ -9241,6 +9506,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 5)
 		(uuid "96c4754a-14f0-59a9-919f-45435292fac4")
 	)
@@ -9249,6 +9528,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 5)
 		(uuid "b0ee0f3c-c2ab-549b-9bea-6af27e133c8c")
 	)
@@ -9257,6 +9550,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 5)
 		(uuid "798340ef-76ff-58cf-8dc8-88edd034c1b2")
 	)
@@ -9265,6 +9572,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 5)
 		(uuid "8c169127-f2cd-5677-84bf-22da5b0a19e7")
 	)
@@ -9273,6 +9594,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 5)
 		(uuid "24a8643f-5135-56aa-b3a6-75be3f9ec411")
 	)
@@ -9281,6 +9616,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 8)
 		(uuid "f5c69116-0632-5b6a-9682-db1889a3ee23")
 	)
@@ -9289,6 +9638,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 10)
 		(uuid "2342277e-cc75-5b3a-92f1-18de604a8eb0")
 	)
@@ -9297,6 +9660,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 10)
 		(uuid "8ee9538b-3019-5a4f-a2bd-a5547083fd80")
 	)
@@ -9305,6 +9682,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 11)
 		(uuid "008d8366-1c5f-5fb2-bced-8946b0c3511d")
 	)
@@ -9313,6 +9704,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 11)
 		(uuid "7f197c86-d46e-5e4f-bd41-4606be1c2af7")
 	)
@@ -9321,6 +9726,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 12)
 		(uuid "3df557c2-2c29-5576-8e25-827b1482b26d")
 	)
@@ -9329,6 +9748,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 12)
 		(uuid "7e25f828-75b7-5d00-8ba8-11947c5a849a")
 	)
@@ -9337,6 +9770,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 12)
 		(uuid "bd9e6a07-d0c6-5240-bcf2-4e1c6d90c548")
 	)
@@ -9345,6 +9792,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 13)
 		(uuid "77460604-d0b6-502b-977f-0a0001f2d4a5")
 	)
@@ -9353,6 +9814,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 13)
 		(uuid "4fd58640-43f9-53f5-8417-7c6b78f551cd")
 	)
@@ -9361,6 +9836,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 14)
 		(uuid "57b89538-3752-5627-bd6b-169a759264e0")
 	)
@@ -9369,6 +9858,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 14)
 		(uuid "a4da4cc1-268d-54e1-a038-646c03eda9e4")
 	)
@@ -9377,6 +9880,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "c0295087-df00-5544-b59c-b5a6bc0a449c")
 	)
@@ -9385,6 +9902,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "4fee4ffa-fc56-5ab7-a56d-83511529471c")
 	)
@@ -9393,6 +9924,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "31ee7472-8467-5653-ab3f-2ae33dcf2aaa")
 	)
@@ -9401,6 +9946,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "88a898ed-4ba6-5f80-8a79-7cca04bdb90e")
 	)
@@ -9409,6 +9968,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "d3f644c7-a748-5d17-bb2c-7b0f48643358")
 	)
@@ -9417,6 +9990,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "0af3bcff-a54a-59fd-b1f6-02bf6a441175")
 	)
@@ -9425,6 +10012,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "687807c5-35bd-54f6-8d0e-a6f557a44537")
 	)
@@ -9433,6 +10034,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "746945f6-f3fe-5504-bd43-f9d4d2f07c96")
 	)
@@ -9441,6 +10056,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "0c9a29a3-7ad0-52d4-9171-4973f76f1eca")
 	)
@@ -9449,6 +10078,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "691c0b74-aeb8-5d3b-9101-93fa55b561e7")
 	)
@@ -9457,6 +10100,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "6c791f59-792e-51aa-9e33-af4a328915ed")
 	)
@@ -9465,6 +10122,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "6fe3acd9-7808-539b-a37d-8924d6fd0c75")
 	)
@@ -9473,6 +10144,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "c3dd0d50-bedf-5816-bea8-3c5f9a9407a5")
 	)
@@ -9481,6 +10166,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "43dc9b14-0831-53b9-8a6b-6bdd6596c877")
 	)
@@ -9489,6 +10188,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "a02bf2d3-143d-5c06-9f56-15f703dccd2c")
 	)
@@ -9497,6 +10210,20 @@
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
+		(tenting
+			(front none)
+			(back none)
+		)
+		(capping none)
+		(covering
+			(front none)
+			(back none)
+		)
+		(plugging
+			(front none)
+			(back none)
+		)
+		(filling none)
 		(net 1)
 		(uuid "b1466447-95f8-5bf9-9f6b-dbba98bd2c8e")
 	)
@@ -9511,13 +10238,12 @@
 			(clearance 0.2)
 		)
 		(min_thickness 0.2)
-		(filled_areas_thickness no)
 		(fill yes
 			(thermal_gap 0.3)
 			(thermal_bridge_width 0.4)
-			(smoothing fillet
-				(radius 0.3)
-			)
+			(smoothing fillet)
+			(radius 0.3)
+			(island_removal_mode 0)
 		)
 		(polygon
 			(pts
