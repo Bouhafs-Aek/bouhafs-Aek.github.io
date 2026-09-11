@@ -1,0 +1,19 @@
+# Python bytecode from the generator/verifier scripts
+__pycache__/
+*.py[cod]
+
+# KiCad per-user and generated files.
+# .kicad_prl holds local UI state, not design data. The backups directory and
+# the lock/cache files are created as soon as the project is opened.
+*.kicad_prl
+*-backups/
+fp-info-cache
+*.lck
+~*.lck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+_autosave-*
+
+# KiCad fabrication output, regenerated from the board rather than tracked
+CAM/
+gerbers/
