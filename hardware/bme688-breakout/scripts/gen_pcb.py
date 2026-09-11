@@ -7,7 +7,7 @@ B.Cu pour, so each surface-mount GND pad gets its own stitching via.
 import math, os, sys, uuid
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import design, geom, router as rt, sexp
+import design, dfm, geom, router as rt, sexp
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -219,7 +219,14 @@ def build_router():
             lset = set(layers)
             if kind in ('thru_hole', 'np_thru_hole'):
                 lset = {'F.Cu', 'B.Cu'}
-            r.add_pad(net, gx, gy, w, h, prot, shape, lset)
+            if kind == 'np_thru_hole':
+                # Keep signal copper out from under the screw head, not just
+                # clear of the drill: a metal screw on a grounded standoff
+                # would otherwise short whatever track passes beneath it.
+                r.add_pad(net, gx, gy, dfm.SCREW_HEAD_DIA, dfm.SCREW_HEAD_DIA,
+                          0, 'circle', lset)
+            else:
+                r.add_pad(net, gx, gy, w, h, prot, shape, lset)
             if net:
                 padinfo.setdefault(net, []).append(
                     dict(ref=ref, pad=name, x=gx, y=gy, w=w, h=h, rot=prot,
@@ -307,13 +314,16 @@ def gnd_vias(r, padinfo):
         placed = False
         for dist in [x * 0.1 for x in range(6, 26)]:
             for ang in range(0, 360, 15):
-                vx = pad['x'] + dist * math.cos(math.radians(ang))
-                vy = pad['y'] + dist * math.sin(math.radians(ang))
-                vi, vj = r.cell(vx, vy)
+                vi, vj = r.cell(pad['x'] + dist * math.cos(math.radians(ang)),
+                                pad['y'] + dist * math.sin(math.radians(ang)))
                 if not (0 <= vi < r.nx and 0 <= vj < r.ny):
                     continue
                 if viablocked[rt.F_CU, vi, vj] or viablocked[rt.B_CU, vi, vj]:
                     continue
+                # Snap to the cell that was actually tested: placing the via at
+                # the unrounded polar coordinate let it drift up to half a cell
+                # past the clearance the grid had cleared.
+                vx, vy = r.pos(vi, vj)
                 if not _stub_clear(r, blocked, pad['x'], pad['y'], vx, vy):
                     continue
                 vias.append((vx, vy, design.GND_NET))

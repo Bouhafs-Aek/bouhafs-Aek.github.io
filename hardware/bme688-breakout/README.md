@@ -121,10 +121,33 @@ TXB0104 cannot do I2C at all. Cost is speed: with 10 kΩ pull-ups the SPI clock
 is practical to a few MHz, not the BME688's 10 MHz maximum.
 
 **SDO has no sensor-side pull-up.** Deliberate — see the SPI note above. The
-host-side pull-up R7 draws ~330 µA through Q3 while JP1 holds SDO at GND in I2C
-mode. That is negligible next to the sensor's ~0.9 mA typical and ~3.7 mA heater
-current, but it does mean the board is not a good fit for a µA-budget sleep
-design without cutting JP3 and reworking R7.
+host-side pull-up R7 draws `VIO`/10 kΩ through Q3 while JP1 holds SDO at GND in
+I2C mode: ~330 µA at 3.3 V, ~500 µA at 5 V. That is negligible next to the
+sensor's ~0.9 mA typical and ~3.7 mA heater current, but it does mean the board
+is not a good fit for a µA-budget sleep design without cutting JP3 and
+reworking R7.
+
+**Nothing routes under a screw head.** The router treats each mounting hole as
+a 3.8 mm keepout, not just a 2.2 mm drill, so no track or via passes beneath an
+M2 head. Without it a signal track ran under H3 — a metal screw on a grounded
+standoff would have shorted it to the B.Cu pour underneath. The pour itself is
+left under the heads, which is harmless: it is ground, which is what a grounded
+standoff would contact anyway.
+
+**The via cost is deliberately steep.** B.Cu carries the pour, so every track
+placed there cuts it. At a lower via cost the router took enough of the back
+layer to fragment the pour into islands, stranding the ground pads that only
+reached the plane through a via in the orphaned piece. Routing is now
+~82% front-layer.
+
+**Decoupling sits further out than ideal**, and the checker prints the real
+figures: C1 is 3.29 mm from U1's VDD pad, C2 4.08 mm from VDDIO. Preferred
+practice is under 2 mm, and the board is too dense to get there without shaving
+courtyards to a few tens of microns. It is accepted rather than fixed because
+the numbers say it does not matter here: ~4 mm of track is roughly 4 nH, and
+against the BME688's heater step (~12 mA over microseconds) that is
+L·dI/dt ≈ 50 nV of rail disturbance. The nearer cap is on VDD, which carries
+the heater current, and the further one on VDDIO, which carries only I/O.
 
 **Gas sensor placement.** The BME688's gas element is heated, and its readings
 follow board temperature, so U1 sits at the top edge with the LDO diagonally
@@ -136,6 +159,25 @@ so expect the usual self-heating offset and calibrate it out.
 conformal coating, no silicone adhesives or sealants nearby, and follow Bosch's
 reflow profile. Gas output needs Bosch's BSEC library and a burn-in period
 before readings settle; the raw resistance is not an air-quality index.
+
+## Left out on purpose
+
+These are choices, not oversights, and each one is a way to damage the board or
+be surprised by it:
+
+- **No reverse-polarity protection on `VIN`.** A series Schottky would cost
+  ~0.3 V, and at `VIN` = 2.5 V the LDO has no headroom to spare. Get `VIN` and
+  `GND` backwards and you will kill the LDO and probably the sensor.
+- **No ESD protection** on the header, Qwiic or test pads. Fine on a bench,
+  not fine on a cable run to somewhere a person can touch.
+- **`3V3` is an output, and Qwiic back-feeds it.** Driving `3V3` (J1 pin 2, J2
+  pin 1, or either Qwiic) while the board is unpowered pushes current back into
+  the LDO's output. Normal for Qwiic boards, still worth knowing.
+- **No series resistors on the sensor-side bus.** With two Qwiic connectors it
+  would be easy to build a chain long enough to want them.
+- **Cutting JP2 on a standalone board kills the bus.** The BSS138 shifter needs
+  pull-ups on both sides; JP2 removes the sensor-side pair, which only makes
+  sense when another board on the chain provides them.
 
 ## Files
 
@@ -195,6 +237,18 @@ that the KiCad 10 additions are present (`body_style`,
 - the **schematic netlist matches `design.py` exactly**, pin for pin, and every
   unconnected pin carries a no-connect
 - no overlapping symbols, everything on the A3 sheet
+
+`scripts/dfm.py` then checks the fabrication rules the project file declares,
+which nothing was testing until they were written:
+
+- copper **stands back** ≥ 0.30 mm from the board edge (`min_copper_edge_clearance`)
+  — not merely "is inside the outline", which a pad overhanging by 0.1 mm
+  still satisfies
+- hole-to-hole web ≥ 0.25 mm, annular ring ≥ 0.10 mm, drill ≥ 0.30 mm,
+  track ≥ 0.20 mm, silkscreen text ≥ 0.40 mm
+- no copper under a 3.8 mm M2 screw head
+- silkscreen over a via, reported as a note rather than a warning because the
+  board setup tents vias, so they sit under solder mask
 
 All of the above passes. What has **not** happened:
 

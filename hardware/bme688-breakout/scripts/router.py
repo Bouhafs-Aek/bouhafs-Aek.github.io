@@ -4,7 +4,11 @@ Obstacles (pads, tracks, vias, the board edge) are rasterised onto a grid at
 GRID mm resolution, dilated by (track_width/2 + clearance) so that a cell is
 walkable only if a track centred there keeps full clearance. Connections are
 then found with Dijkstra over the two copper layers, with a heavy cost on
-layer changes so vias are only used when a route genuinely needs one.
+layer changes so vias are only used when a route genuinely needs one. The via
+cost is deliberately steep: B.Cu carries the ground pour, and every track put
+there cuts the plane. Cut it in the wrong place and the pour fragments into
+islands, which strands whichever ground pads only reached the plane through a
+via in the orphaned piece.
 
 Everything the router emits is re-checked independently by verify.py.
 """
@@ -15,7 +19,7 @@ import numpy as np
 
 GRID = 0.1                     # mm per cell
 F_CU, B_CU = 0, 1
-ORTHO, DIAG, VIA, TURN = 10, 14, 320, 45
+ORTHO, DIAG, VIA, TURN = 10, 14, 1000, 45
 
 # the eight travel directions, indexed by the `d` component of a search state
 DIRS = [(1, 0, ORTHO), (-1, 0, ORTHO), (0, 1, ORTHO), (0, -1, ORTHO),

@@ -9,7 +9,7 @@ coverage and for labels that do not match any net.
 import math, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import design, sexp
+import design, dfm, sexp
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TOL = 1e-6
@@ -146,7 +146,7 @@ class DSU:
 def load_board(path):
     root = sexp.parse(open(path).read())[0]
     nets = {int(n[1]): str(n[2]) for n in sexp.getall(root, 'net')}
-    shapes, courtyards, holes = [], [], []
+    shapes, courtyards, holes, drills = [], [], [], []
     for fp in sexp.getall(root, 'footprint'):
         at = sexp.get(fp, 'at')
         X, Y = float(at[1]), float(at[2])
@@ -175,6 +175,13 @@ def load_board(path):
             if '*.Cu' in cu:
                 cu = {'F.Cu', 'B.Cu'}
             label = '%s.%s' % (ref, name)
+            drill = sexp.get(pad, 'drill')
+            if kind in ('thru_hole', 'np_thru_hole') and drill:
+                dv = [float(v) for v in drill[1:]
+                      if str(v).replace('.', '', 1).isdigit()]
+                drills.append(dict(label=label, x=gx, y=gy,
+                                   drill=dv[0] if dv else 0.0,
+                                   pad=min(w, h), plated=(kind == 'thru_hole')))
             if kind == 'np_thru_hole':
                 holes.append(Shape('cap', None, {'F.Cu', 'B.Cu'}, label,
                                    a=(gx, gy), b=(gx, gy), r=max(w, h) / 2))
@@ -202,6 +209,8 @@ def load_board(path):
         net = nets[int(sexp.get(via, 'net')[1])]
         p = (float(at[1]), float(at[2]))
         shapes.append(Shape('cap', net, {'F.Cu', 'B.Cu'}, 'via%d' % i, a=p, b=p, r=d / 2))
+        drills.append(dict(label='via%d' % i, x=p[0], y=p[1],
+                           drill=float(sexp.get(via, 'drill')[1]), pad=d, plated=True))
     zones = []
     for z in sexp.getall(root, 'zone'):
         layer = str(sexp.get(z, 'layer')[1])
@@ -220,8 +229,15 @@ def load_board(path):
         texts.append((str(t[1]), float(at[1]), float(at[2]),
                       str(sexp.get(t, 'layer')[1]),
                       float(sexp.get(sexp.get(sexp.get(t, 'effects'), 'font'), 'size')[1])))
-    return dict(shapes=shapes, courtyards=courtyards, holes=holes,
-                zones=zones, edges=edges, texts=texts, nets=nets)
+    setup = sexp.get(root, 'setup')
+    tent = sexp.get(setup, 'tenting') if setup else None
+    tented = False
+    if tent is not None:
+        sides = [str(sexp.get(tent, k)[1]) for k in ('front', 'back')
+                 if sexp.get(tent, k) is not None]
+        tented = bool(sides) and all(v == 'yes' for v in sides)
+    return dict(shapes=shapes, courtyards=courtyards, holes=holes, drills=drills,
+                zones=zones, edges=edges, texts=texts, nets=nets, tented=tented)
 
 
 # ---------------------------------------------------------------- pour fill
@@ -674,7 +690,7 @@ def check_sch_overlaps(sch, errs, warns):
 
 
 def main():
-    errs, warns = [], []
+    errs, warns, notes = [], [], []
     pcb = os.path.join(ROOT, 'bme688-breakout.kicad_pcb')
     board = load_board(pcb)
     check_nets(board, errs)
@@ -684,6 +700,7 @@ def main():
     check_courtyards(board, errs)
     check_outline(board, errs)
     check_silk(board, warns)
+    dfm.run(board, errs, warns, notes)
     sch_path = os.path.join(ROOT, 'bme688-breakout.kicad_sch')
     sch = load_sch(sch_path)
     check_sch_netlist(sch, errs)
@@ -695,6 +712,8 @@ def main():
         print('  ERROR   ' + e)
     for w in warns:
         print('  WARN    ' + w)
+    for n in notes:
+        print('  note    ' + n)
     print('=== schematic: %s' % os.path.basename(sch_path))
     print('    %d symbols, %d wires, %d labels'
           % (len(sch['syms']), len(sch['wires']), len(sch['labels'])))
