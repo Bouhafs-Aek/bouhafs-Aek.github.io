@@ -225,11 +225,14 @@ def load_board(path):
 
 
 # ---------------------------------------------------------------- pour fill
-def plane_regions(shapes, znet, zlayer, poly, res=0.1):
-    """Simulate the pour fill and label its connected regions.
+def pour_mask(shapes, znet, zlayer, poly, res=0.1, holes=()):
+    """Rasterise where the pour survives after clearance cut-back.
 
-    Returns (region_count, lookup) where lookup(shape) gives the region id the
-    shape lands in, or None if the fill does not reach it.
+    Returns (mask, x0, y0, res): mask[i, j] is True where copper remains. Any
+    foreign track, pad or via is subtracted with the design clearance around it.
+    Thermal reliefs are not modelled - same-net pads are left solid, which is
+    conservative for connectivity (a thermal still connects) but means the
+    raster shows no spokes.
     """
     import numpy as np
     xs = [p[0] for p in poly]
@@ -239,7 +242,7 @@ def plane_regions(shapes, znet, zlayer, poly, res=0.1):
     ny = int(math.ceil((y1 - y0) / res)) + 1
     gx = x0 + np.arange(nx) * res
     gy = y0 + np.arange(ny) * res
-    mask = np.ones((nx, ny), dtype=bool)      # rectangular pour outline
+    mask = np.ones((nx, ny), dtype=bool)
 
     def stamp(shape, margin):
         bb = shape.bbox()
@@ -269,14 +272,24 @@ def plane_regions(shapes, znet, zlayer, poly, res=0.1):
             hit = np.sqrt(ddx ** 2 + ddy ** 2) <= margin
         mask[i0:i1 + 1, j0:j1 + 1] &= ~hit
 
-    for s in shapes:
-        if zlayer not in s.layers:
+    for sh in shapes:
+        if zlayer not in sh.layers or sh.net == znet:
             continue
-        if s.net == znet:
-            continue
-        stamp(s, design.CLEARANCE)
-    for h in HOLES_FOR_POUR:
+        stamp(sh, design.CLEARANCE)
+    for h in holes:
         stamp(h, design.CLEARANCE)
+    return mask, x0, y0, res
+
+
+def plane_regions(shapes, znet, zlayer, poly, res=0.1):
+    """Simulate the pour fill and label its connected regions.
+
+    Returns (region_count, lookup) where lookup(shape) gives the region id the
+    shape lands in, or None if the fill does not reach it.
+    """
+    import numpy as np
+    mask, x0, y0, res = pour_mask(shapes, znet, zlayer, poly, res, HOLES_FOR_POUR)
+    nx, ny = mask.shape
 
     # 4-connected flood fill over the surviving copper
     label = np.zeros((nx, ny), dtype=np.int32)

@@ -126,7 +126,7 @@ before readings settle; the raw resistance is not an air-quality index.
 | `bme688-breakout.kicad_pcb` | board |
 | `lib/BME688_Breakout.kicad_sym` | BME688 and VIN symbols |
 | `doc/bom.csv` | BOM, 31 placements in 19 lines |
-| `doc/board-preview.svg` | top and bottom render |
+| `doc/board-preview.svg` | top and bottom render, pour as simulated |
 | `scripts/design.py` | **the single source of truth**: parts, nets, placement |
 | `scripts/verify.py` | the checks described below |
 
@@ -180,8 +180,17 @@ All of the above passes. What has **not** happened:
 
 - KiCad's own DRC and ERC have never run on these files
 - no fab has looked at them, and no board has been built
-- zones are defined but not pre-filled — the `filled_polygon` geometry is
-  KiCad's to compute, so **press `B` in pcbnew** to fill the pour on first open
+- zones are defined but **not pre-filled** — **press `B` in pcbnew** on first
+  open. This is deliberate rather than an omission: KiCad stores a zone's fill
+  as `filled_polygon` and then uses it for rendering *and* for DRC
+  connectivity rather than recomputing it on load, so writing an approximated
+  fill here would leave DRC judging our approximation instead of a real fill.
+  Our simulation is a 0.1 mm raster with square cut-backs and no thermal
+  spokes; KiCad rounds the cut-backs, spokes same-net through-hole pads,
+  applies `min_thickness` and removes islands. The bottom view of
+  `doc/board-preview.svg` draws the simulated pour so you can see what `B`
+  will produce — 86.6% of the zone outline stays copper, in one connected
+  region — but the authoritative fill is KiCad's
 - reference designators are on **F.Fab**, not silkscreen: at 35 parts on 1.5" ×
   1.1" the silkscreen is used for functional labels instead
 - SPI has not been validated at speed; treat the few-MHz figure as an estimate

@@ -3,6 +3,12 @@
 A convenience so the layout can be reviewed without opening KiCad. Silkscreen
 text is drawn with an ordinary SVG font rather than KiCad's stroke font, so
 text width is approximate; everything else is to scale.
+
+The bottom view shows the GND pour as verify.py simulates it - the zone outline
+cut back by the design clearance around every foreign track, pad and via. It is
+a 0.1 mm raster of our own model, not KiCad's fill: KiCad rounds the cut-backs,
+adds thermal spokes on same-net through-hole pads, applies min_thickness and
+removes islands. Press B in pcbnew for the real thing.
 """
 import math, os, sys
 
@@ -33,6 +39,39 @@ class View:
         return ((x - self.bx0) * SCALE + self.ox, (y - self.by0) * SCALE + self.oy)
 
 
+def pour_svg(root, zone, view):
+    """The simulated pour fill, as run-length rectangles from the 0.1mm raster."""
+    import verify
+    board = verify.load_board(os.path.join(ROOT, 'bme688-breakout.kicad_pcb'))
+    poly = [(float(p[1]), float(p[2]))
+            for p in sexp.getall(sexp.get(sexp.get(zone, 'polygon'), 'pts'), 'xy')]
+    mask, x0, y0, res = verify.pour_mask(
+        board['shapes'], str(sexp.get(zone, 'net_name')[1]),
+        str(sexp.get(zone, 'layer')[1]), poly, 0.1, board['holes'])
+    nx, ny = mask.shape
+    rects = []
+    for j in range(ny):
+        i = 0
+        while i < nx:
+            if not mask[i, j]:
+                i += 1
+                continue
+            k = i
+            while k + 1 < nx and mask[k + 1, j]:
+                k += 1
+            a = view.pt(x0 + i * res, y0 + j * res)
+            b = view.pt(x0 + (k + 1) * res, y0 + (j + 1) * res)
+            rects.append('<rect x="%.2f" y="%.2f" width="%.2f" height="%.2f"/>'
+                         % (min(a[0], b[0]), min(a[1], b[1]),
+                            abs(b[0] - a[0]), abs(b[1] - a[1])))
+            i = k + 1
+    covered = 100.0 * mask.sum() / mask.size
+    print('    simulated pour: %.1f%% of the zone outline stays copper, %d runs'
+          % (covered, len(rects)))
+    return ('<g fill="%s" fill-opacity="0.75" shape-rendering="crispEdges">%s</g>'
+            % (COL['zone'], ''.join(rects)))
+
+
 def esc(t):
     return t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
@@ -50,15 +89,17 @@ def draw(root, view, side, out):
     cu = 'F.Cu' if side == 'front' else 'B.Cu'
     silk = 'F.SilkS' if side == 'front' else 'B.SilkS'
 
-    # ground pour on the back
+    # ground pour on the back, as the fill simulation sees it
     if side == 'back':
         for z in sexp.getall(root, 'zone'):
             if str(sexp.get(z, 'layer')[1]) != 'B.Cu':
                 continue
             pts = [view.pt(float(p[1]), float(p[2]))
                    for p in sexp.getall(sexp.get(sexp.get(z, 'polygon'), 'pts'), 'xy')]
-            out.append('<polygon points="%s" fill="%s" fill-opacity="0.55"/>'
+            out.append('<polygon points="%s" fill="none" stroke="%s" '
+                       'stroke-width="0.8" stroke-dasharray="3 2"/>'
                        % (' '.join('%.2f,%.2f' % p for p in pts), COL['zone']))
+            out.append(pour_svg(root, z, view))
 
     # tracks
     for seg in sexp.getall(root, 'segment'):
@@ -206,7 +247,8 @@ def main():
                    'font-size="11" fill="#9aa4b2">%s</text>' % (ox, PAD + 11, title))
         draw(root, view, side, out)
     out.append('<text x="%.2f" y="%.2f" font-family="DejaVu Sans, sans-serif" font-size="10" '
-               'fill="#6b7480">%s  -  %.2f x %.2f mm, 2 layers</text>'
+               'fill="#6b7480">%s  -  %.2f x %.2f mm, 2 layers. '
+               'Pour shown as simulated; press B in pcbnew for KiCad\u2019s fill.</text>'
                % (PAD, height - 5, esc(b['title']), b['w'], b['h']))
     out.append('</svg>')
     path = os.path.join(ROOT, 'doc', 'board-preview.svg')
