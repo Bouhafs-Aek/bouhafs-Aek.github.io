@@ -387,19 +387,21 @@ def silkscreen():
     out.append(gr_text('ADDR', 113.9, 87.6, 'F.SilkS', size=0.6))
     out.append(gr_text('I2C PU', 125.0, 87.9, 'F.SilkS', size=0.55))
     out.append(gr_text('LED', 130.0, 89.9, 'F.SilkS', size=0.55))
+    out.append(gr_text('VIO=VIN', 104.5, 93.3, 'F.SilkS', size=0.5))
     out.append(gr_text('QWIIC', 103.0, 84.3, 'F.SilkS', size=0.55))
     out.append(gr_text('QWIIC', 135.0, 84.3, 'F.SilkS', size=0.55))
-    # board identity
-    out.append(gr_text('BME688', 104.2, 95.0, 'F.SilkS', size=0.9, thickness=0.15))
-    out.append(gr_text('BREAKOUT', 104.2, 96.5, 'F.SilkS', size=0.6))
+    # board identity (the long form is on the back, where there is room)
+    out.append(gr_text('BME688', 103.8, 98.3, 'F.SilkS', size=0.75, thickness=0.13))
     # usage notes on the back, where there is room
     notes = [
         'BME688 4-in-1 ENVIRONMENTAL SENSOR BREAKOUT  rev %s' % b['rev'],
-        'VIN 2.5-5.5V -> on-board 3V3 LDO. Header logic 1.8-5.5V.',
+        'VIN 2.5-5.5V -> on-board 3V3 LDO. Host logic = VIO, 3.3-5.5V.',
         'I2C (default): addr 0x76 = JP1 1-2, 0x77 = JP1 2-3',
         'SPI: open JP1 completely, then drive CS',
         'JP2: cut to remove sensor-side I2C pull-ups (daisy chain)',
         'JP3: cut to disable the power LED',
+        'VIO = host I/O rail (3.3-5.5V). JP4 bridges it to VIN;',
+        'cut JP4 and feed VIO when host logic differs from VIN.',
         'Qwiic / STEMMA QT connectors are 3.3V only',
     ]
     for k, line in enumerate(notes):

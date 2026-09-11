@@ -9,7 +9,18 @@ Interface notes that drive the netlist:
   * In I2C mode SDO is the address select pin: GND = 0x76, VDDIO = 0x77.
     JP1 ties it, and is bridged 1-2 (0x76) as manufactured.
   * Q1..Q4 are BSS138 bidirectional level shifters, one per signal, so the
-    0.1" header works with 1.8-5.5V logic while the sensor side stays at 3.3V.
+    0.1" header works with 3.3-5.5V host logic while the sensor side stays at
+    3.3V. The host-side pull-ups reference VIO, not VIN: a host that runs the
+    board from 5V but speaks 3.3V (ESP32, RP2040, STM32) would otherwise see
+    the signals idle at 5V. JP4 bridges VIO to VIN as manufactured, so the
+    common single-rail case needs nothing done.
+
+    3.3V is the floor for VIO, not a limitation of the pull-ups: a BSS138
+    shifter needs its gate on the LOWER of the two rails, and the gate here is
+    on the 3.3V sensor rail. Take VIO below 3.3V and the FET body diode (anode
+    at the source, i.e. the sensor side) forward-biases and pushes roughly
+    VIO+0.7V back into the host. Supporting 1.8V logic needs a dual-supply
+    translator, not a different resistor.
 """
 
 BOARD = dict(
@@ -75,9 +86,12 @@ PARTS = {
  'JP3': ('LED_EN', 'Jumper:SolderJumper_2_Bridged',
          'Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm',
          130.0, 87.5, 0, 'Cut to disable the power LED'),
- 'J1': ('Conn_01x08', 'Connector_Generic:Conn_01x08',
-        'Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical',
-        110.16, 100.4, 90, 'Host header, 2.54mm'),
+ 'J1': ('Conn_01x09', 'Connector_Generic:Conn_01x09',
+        'Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical',
+        108.89, 100.4, 90, 'Host header, 2.54mm'),
+ 'JP4': ('VIO_VIN', 'Jumper:SolderJumper_2_Bridged',
+         'Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm',
+         104.5, 95.0, 0, 'Ties VIO to VIN; cut when the host I/O rail differs'),
  'J2': ('Conn_01x04', 'Connector_Generic:Conn_01x04',
         'Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical',
         115.24, 77.54, 90, '3.3V I2C expansion header, 2.54mm'),
@@ -121,10 +135,10 @@ CONNECTIONS = [
  ('R1','1','SCK'),   ('R1','2','PU3V3'),
  ('R2','1','SDI'),   ('R2','2','PU3V3'),
  ('R5','1','CSB'),   ('R5','2','+3V3'),
- ('R3','1','SCK_H'), ('R3','2','VIN'),
- ('R4','1','SDI_H'), ('R4','2','VIN'),
- ('R7','1','SDO_H'), ('R7','2','VIN'),
- ('R6','1','CS_H'),  ('R6','2','VIN'),
+ ('R3','1','SCK_H'), ('R3','2','VIO'),
+ ('R4','1','SDI_H'), ('R4','2','VIO'),
+ ('R7','1','SDO_H'), ('R7','2','VIO'),
+ ('R6','1','CS_H'),  ('R6','2','VIO'),
  # decoupling
  ('C1','1','+3V3'), ('C1','2','GND'),
  ('C2','1','+3V3'), ('C2','2','GND'),
@@ -141,6 +155,9 @@ CONNECTIONS = [
  # host header
  ('J1','1','VIN'), ('J1','2','+3V3'), ('J1','3','GND'), ('J1','4','SCK_H'),
  ('J1','5','SDI_H'), ('J1','6','SDO_H'), ('J1','7','CS_H'), ('J1','8','GND'),
+ ('J1','9','VIO'),
+ # VIO is the host I/O reference rail for the level shifters; bridged to VIN
+ ('JP4','1','VIN'), ('JP4','2','VIO'),
  # 3.3V expansion header
  ('J2','1','+3V3'), ('J2','2','GND'), ('J2','3','SDI'), ('J2','4','SCK'),
  # Qwiic (GND, 3.3V, SDA, SCL) with shells grounded
@@ -151,11 +168,11 @@ CONNECTIONS = [
 ]
 
 # Nets that carry power and get the wider trace width.
-POWER_NETS = {'VIN', '+3V3', 'PU3V3'}
+POWER_NETS = {'VIN', '+3V3', 'PU3V3', 'VIO'}
 GND_NET = 'GND'
 
 # Silkscreen pin labels for the two 2.54mm headers.
-J1_LABELS = ['VIN', '3V3', 'GND', 'SCK', 'SDI', 'SDO', 'CS', 'GND']
+J1_LABELS = ['VIN', '3V3', 'GND', 'SCK', 'SDI', 'SDO', 'CS', 'GND', 'VIO']
 J2_LABELS = ['3V3', 'GND', 'SDA', 'SCL']
 
 
@@ -201,6 +218,7 @@ SCH = {
  'R8':  (350.0, 175.0,   0),
  'D1':  (350.0, 192.0,  90),
  'JP3': (350.0, 210.0, 270),
+ 'JP4': (330.0, 125.0, 270),
  'J1':  (395.0,  95.0,   0),
  'J2':  (395.0, 160.0,   0),
  'J3':  (395.0, 200.0,   0),
@@ -227,7 +245,8 @@ POWER_SYMBOLS = {
  'GND':  ('power:GND', 'down'),
  '+3V3': ('power:+3V3', 'up'),
  'VIN':  ('BME688_Breakout:VIN', 'up'),
+ 'VIO':  ('BME688_Breakout:VIO', 'up'),
 }
 
 # PWR_FLAG markers so ERC sees these nets as driven.
-PWR_FLAGS = [('GND', 30.0, 130.0), ('VIN', 50.0, 130.0)]
+PWR_FLAGS = [('GND', 30.0, 130.0), ('VIN', 50.0, 130.0), ('VIO', 70.0, 130.0)]

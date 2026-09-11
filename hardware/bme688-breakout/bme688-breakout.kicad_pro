@@ -139,6 +139,10 @@
       },
       {
         "netclass": "Power",
+        "pattern": "VIO"
+      },
+      {
+        "netclass": "Power",
         "pattern": "GND"
       }
     ]

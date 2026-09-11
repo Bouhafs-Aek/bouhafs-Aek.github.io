@@ -2,7 +2,7 @@
 
 A KiCad 10 design for a host-agnostic breakout board around the **Bosch BME688**
 (gas/VOC, humidity, pressure, temperature, LGA-8). It brings the sensor out on a
-0.1" header that works with any I2C or SPI microcontroller at 1.8–5.5 V logic,
+0.1" header that works with any I2C or SPI microcontroller at 3.3–5.5 V logic,
 plus two Qwiic / STEMMA QT connectors for daisy-chaining on the 3.3 V side.
 
 ![Board preview](doc/board-preview.svg)
@@ -30,7 +30,7 @@ own reviewed `Package_LGA:Bosch_LGA-8_3x3mm_P0.8mm_ClockwisePinNumbering`
 | Layers | 2, 1.6 mm FR4, B.Cu is a solid GND pour |
 | KiCad | 10 (`kicad_sch` 20250901, `kicad_pcb` 20250907) |
 | Input | 2.5–5.5 V on `VIN` → on-board AP2112K-3.3 LDO |
-| Host logic | 1.8–5.5 V, level shifted on all four signals |
+| Host logic | 3.3–5.5 V, set by `VIO`, level shifted on all four signals |
 | Interfaces | I2C (default, 0x76) or SPI |
 | Mounting | 4 × M2 (2.2 mm) at the corners |
 | Min track / clearance | 0.25 mm / 0.20 mm (0.4 mm on power nets) |
@@ -38,7 +38,7 @@ own reviewed `Package_LGA:Bosch_LGA-8_3x3mm_P0.8mm_ClockwisePinNumbering`
 
 ## Pinout
 
-### J1 — host header (2.54 mm, level-shifted, tolerates 1.8–5.5 V)
+### J1 — host header (2.54 mm, level-shifted to `VIO`)
 
 | Pin | Name | Function |
 |----:|------|----------|
@@ -50,6 +50,7 @@ own reviewed `Package_LGA:Bosch_LGA-8_3x3mm_P0.8mm_ClockwisePinNumbering`
 | 6 | SDO | SPI MISO (unused in I2C) |
 | 7 | CS | SPI chip select; leave open for I2C |
 | 8 | GND | |
+| 9 | VIO | host I/O reference, 3.3–5.5 V — see below |
 
 ### J2 — expansion header (2.54 mm, 3.3 V only)
 
@@ -86,11 +87,30 @@ still bridged would short that output. Open both sides of JP1, then drive `CS`.
 | JP1 | I2C address / interface select | bridged 1–2 → 0x76 |
 | JP2 | sensor-side I2C pull-ups (R1, R2) | bridged (pull-ups on) |
 | JP3 | power LED | bridged (LED on) |
+| JP4 | `VIO` → `VIN` | bridged (`VIO` = `VIN`) |
 
 Cut **JP2** on every board but the first when chaining several over Qwiic, so
 the bus only carries one pair of pull-ups. Cut **JP3** to save the LED's ~1 mA.
+Cut **JP4** only if your host's I/O rail differs from `VIN` — then drive `VIO`
+(J1 pin 9) from that rail instead.
 
 ## Design notes
+
+**`VIO` is the host I/O rail, and it is not `VIN`.** The host-side pull-ups
+reference `VIO`, which JP4 bridges to `VIN` as manufactured — so a single-rail
+host (5 V board, 5 V logic; or 3.3 V board, 3.3 V logic) needs nothing done.
+The split matters for the common mixed case: run the board from 5 V while
+talking to a 3.3 V MCU (ESP32, RP2040, STM32) and pull-ups referenced to `VIN`
+would idle all four signals at 5 V into 3.3 V GPIO. Cut JP4, feed `VIO` from
+the host's 3.3 V rail, and the host side idles at 3.3 V.
+
+**Why `VIO` bottoms out at 3.3 V.** Not a pull-up limit — a topology limit. A
+BSS138 shifter needs its gate on the *lower* of the two rails, and here the
+gate sits on the 3.3 V sensor rail. Take `VIO` below 3.3 V and the FET body
+diode (anode at the source, i.e. the sensor side) forward-biases and pushes
+roughly `VIO`+0.7 V back into the host. So 1.8 V logic is not supported by this
+board and cannot be made to work by changing a resistor; it needs a dual-supply
+translator such as a TXS0104E, with the I2C/SPI arbitration caveats below.
 
 **Level shifting.** Four BSS138 + pull-up shifters (Q1–Q4), one per signal,
 rather than a translator IC. The discrete shifter is bidirectional with no
@@ -125,7 +145,7 @@ before readings settle; the raw resistance is not an air-quality index.
 | `bme688-breakout.kicad_sch` | schematic |
 | `bme688-breakout.kicad_pcb` | board |
 | `lib/BME688_Breakout.kicad_sym` | BME688 and VIN symbols |
-| `doc/bom.csv` | BOM, 31 placements in 19 lines |
+| `doc/bom.csv` | BOM, 32 placements in 20 lines |
 | `doc/board-preview.svg` | top and bottom render, pour as simulated |
 | `scripts/design.py` | **the single source of truth**: parts, nets, placement |
 | `scripts/verify.py` | the checks described below |
@@ -165,10 +185,10 @@ that the KiCad 10 additions are present (`body_style`,
 `scripts/verify.py` re-parses the emitted files and checks:
 
 - every pad's net matches `design.py`, and no pad is silently left floating
-- **electrical connectivity** of all 14 nets, including a simulated pour fill —
+- **electrical connectivity** of all 15 nets, including a simulated pour fill —
   the GND pour is cut back around every foreign track, pad and via and
   flood-filled, so a pour split into islands is reported rather than assumed
-  away (currently: one region, all 19 GND items in it)
+  away (currently: all 19 GND items in a single region)
 - copper-to-copper and hole-to-copper clearance ≥ 0.20 mm
 - no footprint courtyard overlaps, all copper inside the board outline
 - no silkscreen over pads
@@ -189,8 +209,10 @@ All of the above passes. What has **not** happened:
   spokes; KiCad rounds the cut-backs, spokes same-net through-hole pads,
   applies `min_thickness` and removes islands. The bottom view of
   `doc/board-preview.svg` draws the simulated pour so you can see what `B`
-  will produce — 86.6% of the zone outline stays copper, in one connected
-  region — but the authoritative fill is KiCad's
+  will produce — 85.8% of the zone outline stays copper, with all 19 GND items
+  in a single region (the raster leaves one orphan island carrying no GND item,
+  which is what `island_removal_mode` exists to drop) — but the authoritative
+  fill is KiCad's
 - reference designators are on **F.Fab**, not silkscreen: at 35 parts on 1.5" ×
   1.1" the silkscreen is used for functional labels instead
 - SPI has not been validated at speed; treat the few-MHz figure as an estimate
